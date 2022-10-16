@@ -31,7 +31,7 @@ while True:
     print("Connection from ", address, "has been established!")
     while True:
 
-        data = clientsocket.recv(1).decode("utf-8")
+        data = clientsocket.recv(16).decode("utf-8")
 
 
         if 'L' in data:
