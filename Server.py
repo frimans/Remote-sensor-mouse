@@ -1,15 +1,15 @@
 import socket
-import qtpy
-import pyautogui
+#import qtpy
+#import pyautogui
 import numpy as np
 import threading
-
-
+import autopy
+"""
 width_height = pyautogui.size()
 print(width_height)
 print(width_height[0])
 print(width_height[1])
-
+"""
 
 hostnm = socket.gethostname()
 ipaddr = socket.gethostbyname(hostnm)
@@ -26,6 +26,7 @@ packet = ""
 count = 0
 received = 0
 while True:
+    print("Waiting")
     clientsocket, address = s.accept()
 
     print("Connection from ", address, "has been established!")
@@ -35,9 +36,12 @@ while True:
 
 
         if 'L' in data:
-            pyautogui.leftClick()
+            pass
+            autopy.mouse.click(button=autopy.mouse.Button.LEFT)
         elif 'R' in data:
-            pyautogui.rightClick()
+            pass
+            autopy.mouse.click(button=autopy.mouse.Button.RIGHT)
+
         elif "\n" in data:
             pass
         else:
@@ -61,11 +65,12 @@ while True:
 
 
 
-                x = -data_split[0] * 10
-                y = data_split[1] * 10
+                x = -data_split[0]*8
+                y = data_split[1]*8
 
-                if count == 100:
-                    pyautogui.move(x, y, duration=0)
+                if count == 10:
+                    cur = autopy.mouse.location()
+                    autopy.mouse.move(cur[0] + x, cur[1] + y)
                     count = 0
                 else:
                     count += 1
